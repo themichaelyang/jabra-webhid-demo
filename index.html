@@ -1,9 +1,17 @@
-
 <!DOCTYPE html>
-<html>
-<head></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title></title>
+  <meta name="description" content="">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+  </style>
+</head>
 <body>
-
 <button type="button" onclick="requestJabraDevice()">Connect</button>
 
 <h3>Outputs (host → device)</h3>
@@ -35,21 +43,20 @@
 </ul>
 
 <div id="mylog"></div>
-
 <script type="application/javascript">
 
-var device = null;
+let device = null;
 
 function logappend(msg) {
   console.log(msg);
-  var mylog = document.getElementById('mylog');
-  var line = document.createElement('div');
+  let mylog = document.getElementById('mylog');
+  let line = document.createElement('div');
   line.textContent = msg;
   mylog.appendChild(line);
 }
 
 function hexByte(d) {
-  var hex = Number(d).toString(16);
+  let hex = Number(d).toString(16);
   while (hex.length < 2)
     hex = "0" + hex;
   return hex;
@@ -228,7 +235,9 @@ async function requestJabraDevice() {
   }
 
   // Show a device chooser dialog. The vendor ID filter matches Jabra devices.
-  device = await navigator.hid.requestDevice({filters: [{ vendorId: 0x0b0e }]});
+  let devices = await navigator.hid.requestDevice({filters: [{ vendorId: 0x0b0e }]});
+  device = devices[0];
+
   if (!device) {
     console.log('chooser dismissed without a selection');
     return;
