@@ -154,6 +154,13 @@ function onInputReport(event) {
   let reportId = event.reportId;
   let reportData = event.data;
 
+  let bytes = "";
+  for (let i = 0; i < reportData.byteLength; ++i) {
+    bytes += ' ' + hexByte(reportData.getUint8(i));
+  }
+
+  console.log(`${reportId}: ${bytes}`);
+
   let buf = '';
   if (reportId == 0x01) {
     if (reportData.getUint8(0) & 0x01)
